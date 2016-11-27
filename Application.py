@@ -3,7 +3,7 @@ import requests
 import time as tt
 from threading import Thread
 from RatpWatcher import RatpWatcher
-from WeatherWatcher import Weathercatcher
+from WeatherWatcher import WeatherWatcher
 from AlarmClock import AlarmClock
 from Criteria import Criteria
 
@@ -53,9 +53,6 @@ class Application(metaclass=Singleton):
         t = Thread(target=functionToExec, args=[alarm_time,1] )
         t.start()
 
-
-	def set_new_alarm_clock(self, alarm_config):
-		self.alarm_clock.time_difference = alarm_config.time_difference
-		self.alarm_clock.ring = alarm_config.ring
-
-        
+    def set_new_alarm_clock(self, alarm_config):
+        self.alarm_clock.time_difference = alarm_config.time_difference
+        self.alarm_clock.ring = alarm_config.ring

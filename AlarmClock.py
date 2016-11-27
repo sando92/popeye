@@ -27,7 +27,7 @@ class AlarmClock():
 		self.time_difference = 0
 
 	def must_ring(self):
-        return self.ring
+		return self.ring
 
 	# N'essaie pas de comprendre cette fonction, je ne sais même pas pourquoi ça marche...
 	def to_arduino(self):
