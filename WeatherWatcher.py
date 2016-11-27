@@ -1,5 +1,7 @@
 import requests
 
+from AlarmConfig import AlarmConfig
+
 
 class WeatherWatcher():
     """Classe pour obtenir les informations sur la météo. Permet de désactiver ou non le réveil en cas de mauvaises conditions météorologiques."""
@@ -29,15 +31,15 @@ class WeatherWatcher():
     def setStatus(self):
         indicator = self.getIndicator()
         if self.moreless == 'more':
-            if indicator >= self.limit: 
+            if indicator >= self.limit:
                 self.status = True
             else:
                 self.status = False
         else:
-            if indicator >= self.limit: 
+            if indicator >= self.limit:
                 self.status = False
             else:
                 self.status = True
 
     def weatherStatus(self):
-        return self.status
+        return AlarmConfig(self.status)
