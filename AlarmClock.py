@@ -23,7 +23,7 @@ class AlarmClock():
 	# N'essaie pas de comprendre cette fonction, je ne sais même pas pourquoi ça marche...
 	def to_arduino(self):
 		# Test if the alarm is setted
-		if not self.isSet():
+		if not self.is_set():
 			raise Exception("Alarm not setted")
 
 		# Now we can calculate
