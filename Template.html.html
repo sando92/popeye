@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Programmation de PopEye</title>
+    <!-- CSS -->
+    <link <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="C:/Documents/bootstrap-3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"> -- >
+    <!-- <link href="//www.fuelcdn.com/fuelux/3.13.0/css/fuelux.min.css" rel="stylesheet"> -->
+    <script type="text/javascript">
+      function show_loading() {
+        if (document.formulaire.nomVille.value==""){
+          document.formulaire.nomVille.focus();
+          alert("L'email est obligatoire!");
+          return false;
+        }
+      }
+    </script>
+  </head>
+  <body class="fuelux">
+    <!-- Checkbox example -->
+    <div id="hereKittyKitty" class="alert bg-info">Formulaire de programmation du réveil</div>
+    <form method="POST" action='/create/application'>
+      <div class="form-check">
+        <label class="form-check-label">Ville*</label>
+        <input type="text" class="form-control" id="nomVille" placeholder="Nom ville">
+        <label class="form-check-label">Code Postal*</label>
+        <input type="text" class="form-control" id="codePostal" placeholder="Code Postal">
+        <label class="form-check-label">Pays*</label>
+        <input type="text" class="form-control" id="codePostal" placeholder="Pays">
+      </div>
+      <br>
+      <div class="form-check-label">
+        <label class="alarmeHour" data-initialize="custom-select">Heure d'alarme</label>
+        <br>
+        <label for="HeuresForm">Heures</label>
+        <select class="custom-selected" id="heures" required="">Heure
+          <option value="00">00</option>
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+          <option value="16">16</option>
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+        </select>
+        <label for="MinutesForm" required>Minutes</label>
+        <select class="custom-selected" id="minutes">Minutes
+          <option value="00">00</option>
+          <option value="05">05</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+          <option value="30">30</option>
+          <option value="35">35</option>
+          <option value="40">40</option>
+          <option value="45">45</option>
+          <option value="50">50</option>
+          <option value="55">55</option>
+        </select>
+      </div>
+      <br><br>
+      <label for="critereAlarme">Critère d'application de l'alarme</label>
+      <br>
+      <label for="weatherRadio">Weather</label>
+      <input class="form-check-input" type="radio" name="criteriaRadio" id="weather" value="weather" onclick="document.getElementById('criteriaRATP').style.visibility = 'hidden'; document.getElementById('WeatherCase').style.visibility = 'visible'; " required>
+      <label for="ratpRadio">RATP</label>
+      <input class="form-check-input" type="radio" name="criteriaRadio" id="ratp" value="ratp" onclick="document.getElementById('criteriaRATP').style.visibility = 'visible'; document.getElementById('WeatherCase').style.visibility = 'hidden';" required>
+      <br>
+      <select multiple class="custom-select" id ='criteriaRATP' >
+        <option value="ligne_1">Ligne 1</option>
+        <option value="ligne_2">Ligne 2</option>
+        <option value="ligne_3">Ligne 3</option>
+        <option value="ligne_4">Ligne 4</option>
+        <option value="ligne_5">Ligne 5</option>
+        <option value="ligne_6">Ligne 6</option>
+        <option value="ligne_7">Ligne 7</option>
+        <option value="ligne_8">Ligne 8</option>
+        <option value="ligne_9">Ligne 9</option>
+        <option value="ligne_10">Ligne 10</option>
+        <option value="ligne_11">Ligne 11</option>
+        <option value="ligne_12">Ligne 12</option>
+        <option value="ligne_13">Ligne 13</option>
+        <option value="ligne_14">Ligne 14</option>
+        <option value="ligne_14">Ligne 14</option>
+        <option value="tram_1">Tram 1</option>
+        <option value="tram_2">Tram 2</option>
+        <option value="tram_5">Tram 5</option>
+        <option value="tram_6">Tram 6</option>
+        <option value="tram_7">Tram 7</option>
+        <option value="tram_8">Tram 8</option>
+        <option value="rer_A">RER A</option>
+        <option value="rer_B">RER B</option>
+      </select>
+
+      <br>
+      <div id = 'WeatherCase'>
+      <select multiple class="custom-select" id ='criteriaWeather' >
+        <option value="15">Wind (noeud par heure)</option>
+        <option value="20">Rain (mm)</option>
+      </select>
+      <br>
+        <label class="form-check-label">Valeur limite</label>
+        <input type="text" class="form-control" id="valeurLimite" placeholder="Valeur limite">
+        <br>
+        <label class="form-check-label">Alarme fonctionnelle si la valeur indicatrice est: </label>
+        <br>
+        <input class="form-check-input" type="radio" name="moreless" id="more" value="more" checked>
+        supérieure à la valeur limite. 
+        <input class="form-check-input" type="radio" name="moreless" id="less" value="less" checked>
+        inférieure à la valeur limite. 
+      </div>
+      <br>
+      <input type='submit' id='Envoyer formulaire' >
+    </form>
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="C:/Documents/bootstrap-3.3.7/dist/js/jquery.js"></script>
+    <script src="C:/Documents/bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
+
+
+
+
