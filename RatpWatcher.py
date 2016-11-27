@@ -1,6 +1,8 @@
 import requests
 import json
 
+from AlarmConfig import AlarmConfig
+
 
 class RatpWatcher():
     def __init__(self, lines):
@@ -53,10 +55,10 @@ class RatpWatcher():
     def ratpStatus(self):
         print("Datas récupérées à {}".format(self.response["now"]))
         if self.problem == 1:
-            return self.problem
+            return AlarmConfig.add_time_diff(-30)
         for line in self.lines:
             splittedInfo = line.split("_")
             if self.getLineStatus(splittedInfo[0], splittedInfo[1]) != "normal":
                 self.problem = 1
-                return self.problem
-        return self.problem
+                return AlarmConfig.add_time_diff(-30)
+        return AlarmConfig.no_changes()
