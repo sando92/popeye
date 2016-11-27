@@ -8,6 +8,18 @@ class AlarmClock():
 		self.time_difference = time_difference
 		self.ring = ring
 
+	# Alarm Setter
+	def set_alarm_time(self, alarm_time):
+		self.alarm_time = alarm_time
+
+	# Time_Diff Setter
+	def set_time_difference(self, time_diff):
+		self.time_difference = time_diff
+
+	# Reset le décalage
+	def reset_time_difference():
+		self.time_difference = 0
+
 	# N'essaie pas de comprendre cette fonction, je ne sais même pas pourquoi ça marche...
 	def to_arduino(self):
 		# Test if the alarm is setted
