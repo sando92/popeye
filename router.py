@@ -13,9 +13,13 @@ class MainHandler(tornado.web.RequestHandler):
         items = ["Item 1", "Item 2", "Item 3"]
         self.render("template.html", title="My title", items=items)
 
-class AppCreator(tornado.web.RequestHandler)
+class AppCreator(tornado.web.RequestHandler):
     def get(self):
+        app = Application()
+
+
         alarm_time = self.get_argument("alarm_time")
+        country = self.get_argument("country")
         zip_code = self.get_argument("zip_code")
         city = self.get_argument("city")
         criteria_name = self.get_argument("criteria_name")
@@ -24,37 +28,26 @@ class AppCreator(tornado.web.RequestHandler)
         alarm_clock = AlarmClock(alarm_time)
         criteria = Criteria(criteria_name, criteria_args)
 
-        application = Application(alarm_clock, zip_code, city, criteria)
-        application.startApplication()
+        app.set_country(country)
+        app.set_zip_code(zip_code)
+        app.set_city(city)
+        app.set_alarm_clock(alarm_clock)
+        app.set_criteria(criteria)
 
-
+        app.startApplication(app.get_alarm_clock().get_alarm_time())
 
 class RatpHandler(tornado.web.RequestHandler):
-	def get(self,lines):
-		try:
-            rw = RatpWatcher(lines.split("-"))
-            state = rw.ratpStatus()
-            print(state)
-            if state == 1:
-                #retirer 30 min à l'heure de l'alarme en passant par la classe AlarmClock 
-                #renvoyer HHMM au réveil
-                requests.get("http://192.168.2.2/ALARMTIME=" + alarmClock.getAlarmTime())
-		except Exception:
-			print("ERROR")
+    def get(self,lines):
+        rw = RatpWatcher(lines.split("-"))
+        state = rw.ratpStatus()
+        print(state)
 
 class WeatherHandler(tornado.web.RequestHandler):
     def get(self,args):
-        try:
-            splittedArgs = args.split("-")  
-            ww = WeatherWatcher(splittedArgs[0],application.getLatitude()
-                ,application.getLongitude(),splittedArgs[1], splittedArgs[2])
-            state = ww.meteoStatus()
-            if state == 1:
-                #we do not let the alarm clock ring
-                requests.get("http://192.168.2.2/ALARMTIME=" + alarmClock.getAlarmTime())
-        except Exception:
-            print("ERROR")
-
+        splittedArgs = args.split("-")  
+        ww = WeatherWatcher(splittedArgs[0],application.getLatitude(),application.getLongitude(),splittedArgs[1], splittedArgs[2])
+        state = ww.meteoStatus()
+        print(state)
 
 def make_app():
     return tornado.web.Application([

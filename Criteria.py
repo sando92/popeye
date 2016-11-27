@@ -3,8 +3,14 @@ class Criteria():
 		self.name = name
 		self.args = args
 
-	def getName(self):
+	def set_name(self, name):
+		self.name = name
+
+	def set_args(self, args):
+		self.args = args
+
+	def get_name(self):
 		return self.name
 
-	def getArgs(self):
+	def get_args(self):
 		return self.args

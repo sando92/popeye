@@ -1,28 +1,61 @@
 import datetime
+import requests
+import time as tt
+from threading import Thread
+from RatpWatcher import RatpWatcher
+from WeatherWatcher import Weathercatcher
+from AlarmClock import AlarmClock
+from Criteria import Criteria
 
-class Application():
-	#alarm_clock cf. class, city, zip_code and country strings, criteria must be a dictionnary
-	def __init__(self, alarm_clock=None, city=0, zip_code=0, criteria=None):
-		self.alarm_clock = alarm_clock
-		self.country = country
-		self.city = city
-		self.zip_code = zip_code
-		self.criteria = criteria
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
 
-	def startApplication(self):
-		time = datetime.time.now()
-		if (alarm_clock.alarm_time - time < 1heure)
-			alarm_config = checkCriteria()
-			setNewAlarmClock()
+class Application(metaclass=Singleton):
+    def __init__(self):
+        self.alarm_clock = AlarmClock()
+        self.criteria = Criteria()
+        self.country = None
+        self.zip_code = None
+        self.city = None
 
-	def checkCriteria(self):
-		alarm_config = AlarmConfig() #as to be set with the return of agregator
-		#appel méthode de l'agregator pour connaitre la alarmClock config général des watchers
+    def set_country(self,country):
+    	self.country = country
 
-		return alarm_config
+    def set_zip_code(self, zip_code):
+    	self.zip_code = zip_code
 
-	def setNewAlarmClock(self):
-		alarm_config = self.checkCriteria()
+    def set_city(self, city):
+    	self.city = city
 
+    def set_criteria(self,criteria):
+        self.criteria.set_name(criteria.get_name())
+        self.criteria.set_args(criteria.get_args())
+
+    def set_alarm_clock(self, alarm_clock):
+        self.alarm_clock.set_alarm_time(alarm_clock.get_alarm_time())
+
+    def functionToExec(time, delay):
+        app = Application()
+        a = datetime.datetime.now()
+        b = datetime.datetime(2016, 11, 27, time.hour, time.minute-delay)
+        c = b-a
+        tt.sleep(c.seconds)
+        resp = requests.get("http://localhost:8888/ratp/ligne_9")
+        app.set_new_alarm_clock(resp)
+        if app.alarm_clock.must_ring():
+            requests.get("http://192.168.2.2/ALARMTIME=" + app.alarm_clock.to_arduino())
+
+    def start_application(self,alarm_time):
+        t = Thread(target=functionToExec, args=[alarm_time,1] )
+        t.start()
+
+
+	def set_new_alarm_clock(self, alarm_config):
 		self.alarm_clock.time_difference = alarm_config.time_difference
 		self.alarm_clock.ring = alarm_config.ring
+
+        

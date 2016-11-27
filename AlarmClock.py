@@ -12,13 +12,22 @@ class AlarmClock():
 	def set_alarm_time(self, alarm_time):
 		self.alarm_time = alarm_time
 
+	def get_alarm_time(self):
+		return self.alarm_time
+
 	# Time_Diff Setter
 	def set_time_difference(self, time_diff):
 		self.time_difference = time_diff
 
+	def get_time_difference(self):
+		return self.time_difference
+
 	# Reset le décalage
 	def reset_time_difference():
 		self.time_difference = 0
+
+	def must_ring(self):
+        return self.ring
 
 	# N'essaie pas de comprendre cette fonction, je ne sais même pas pourquoi ça marche...
 	def to_arduino(self):
