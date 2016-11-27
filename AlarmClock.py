@@ -1,7 +1,7 @@
 import datetime
 
 class AlarmClock():
-	def __init__(self, alarm_time, time_difference=0, ring=True):
+	def __init__(self, alarm_time=None, time_difference=0, ring=True):
 		# Le time (datetime.time)
 		self.alarm_time = alarm_time
 		# La difference, en minutes
@@ -9,7 +9,16 @@ class AlarmClock():
 		self.ring = ring
 
 	# N'essaie pas de comprendre cette fonction, je ne sais même pas pourquoi ça marche...
-	def send_time(self):
+	def to_arduino(self):
+		# Test if the alarm is setted
+		if not self.isSet():
+			raise Exception("Alarm not setted")
+
+		# Now we can calculate
 		new_hour =  self.alarm_time.hour + (self.alarm_time.minute + self.time_difference)//60
 		if new_hour >= 0  and new_hour <= 23:
+			# Return to arduino timestamp
 			return datetime.time(new_hour, (self.alarm_time.minute + self.time_difference)%60).strftime("%H%M")
+
+	def is_set(self):
+		return self.alarm_time is not None
