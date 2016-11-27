@@ -55,10 +55,10 @@ class RatpWatcher():
     def ratpStatus(self):
         print("Datas récupérées à {}".format(self.response["now"]))
         if self.problem == 1:
-            return AlarmConfig.add_time_diff(-30)
+            return 1 #AlarmConfig.add_time_diff(-30)
         for line in self.lines:
             splittedInfo = line.split("_")
             if self.getLineStatus(splittedInfo[0], splittedInfo[1]) != "normal":
                 self.problem = 1
-                return AlarmConfig.add_time_diff(-30)
-        return AlarmConfig.no_changes()
+                return 1 #AlarmConfig.add_time_diff(-30)
+        return 0 #AlarmConfig.no_changes()

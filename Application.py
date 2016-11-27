@@ -38,19 +38,21 @@ class Application(metaclass=Singleton):
     def set_alarm_clock(self, alarm_clock):
         self.alarm_clock.set_alarm_time(alarm_clock.get_alarm_time())
 
-    def functionToExec(time, delay):
+    def functionToExec(self, hour, minu, delay):
         app = Application()
         a = datetime.datetime.now()
-        b = datetime.datetime(2016, 11, 27, time.hour, time.minute-delay)
+        b = datetime.datetime(2016, 11, 27, hour, minu-delay)
         c = b-a
         tt.sleep(c.seconds)
         resp = requests.get("http://localhost:8888/ratp/ligne_9")
-        app.set_new_alarm_clock(resp)
-        if app.alarm_clock.must_ring():
-            requests.get("http://192.168.2.2/ALARMTIME=" + app.alarm_clock.to_arduino())
+        ac = AlarmClock(datetime.time(hour, minu), int(resp.content))
+        print("http://192.168.2.2/ALARMTIME=" + ac.to_arduino())
+        requests.get("http://192.168.2.2/ALARMTIME=" + ac.to_arduino())
 
-    def start_application(self,alarm_time):
-        t = Thread(target=functionToExec, args=[alarm_time,1] )
+    def start_application(self, alarm_time):
+        hour = alarm_time.hour
+        minute = alarm_time.minute
+        t = Thread(target=self.functionToExec, args=[hour, minute, 1])
         t.start()
 
     def set_new_alarm_clock(self, alarm_config):
